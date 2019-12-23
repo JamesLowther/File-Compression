@@ -1,4 +1,4 @@
-// File compression | James Lowther | Auguest 4, 2019
+// File compression | James Lowther | December 22, 2019
 
 #include <iostream>
 #include <fstream>
