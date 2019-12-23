@@ -45,7 +45,7 @@ ofstream* open_output_file(string ofilename) {
         exit(1);
     }
 
-    //cout << "Output file '" << ofilename << "' opened successfully" << endl;
+    cout << "Output file '" << ofilename << "' opened successfully" << endl;
 
     return ofile;
 }
@@ -107,7 +107,7 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
 
     while (!ifile->eof()) {
         
-        cout << hex << (int)first_byte << "," << (int)next_byte << "," << (int)byte_count << endl;
+        //cout << hex << (int)first_byte << "," << (int)next_byte << "," << (int)byte_count << endl;
 
         if (first_byte == next_byte) {
             byte_count = ifile->get();
