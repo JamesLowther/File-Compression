@@ -44,7 +44,7 @@ ofstream* open_output_file(string ofilename) {
         exit(1);
     }
 
-    cout << "Output file '" << ofilename << "' opened successfully" << endl;
+    //cout << "Output file '" << ofilename << "' opened successfully" << endl;
 
     return ofile;
 }
