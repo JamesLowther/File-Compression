@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
 
 #include "fcomp.hpp"
 
@@ -51,6 +52,8 @@ ofstream* open_output_file(string ofilename) {
 
 void rl_compress(ifstream *ifile, ofstream *ofile) {
 
+    auto start_time = chrono::system_clock::now();
+
     char curr_byte;
     char write_byte;
     char byte_count;
@@ -76,11 +79,19 @@ void rl_compress(ifstream *ifile, ofstream *ofile) {
 
     }
 
+    auto end_time = chrono::system_clock::now();
+
+    chrono::duration<double> elapsed_time = end_time - start_time;
+
     cout << "Run-length file compression complete" << endl;
+
+    cout << "Elapsed time: " << elapsed_time.count() << "s" << endl;
 
 }
 
 void rl_uncompress(ifstream *ifile, ofstream *ofile) { 
+
+    auto start_time = chrono::system_clock::now();
 
     char write_byte;
     char first_byte;
@@ -128,7 +139,14 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
         }
     }
 
+    auto end_time = chrono::system_clock::now();
+
+    chrono::duration<double> elapsed_time = end_time - start_time;
+
     cout << "Run-length file uncompression complete" << endl;
+
+    cout << "Elapsed time: " << elapsed_time.count() << "s" << endl;
+
 }
 
 int main(int argc, char *argv[]) {
