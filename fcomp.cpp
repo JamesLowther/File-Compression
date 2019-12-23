@@ -94,7 +94,6 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
 
     write_byte = first_byte;
 
-    //while (!(first_byte == EOF && next_byte == EOF)) {
     while (!ifile->eof()) {
         
         cout << hex << (int)first_byte << "," << (int)next_byte << "," << (int)byte_count << endl;
