@@ -3,6 +3,9 @@
 *.png
 *.jpg
 
+# vscode
+.vscode
+
 # Prerequisites
 *.d
 
