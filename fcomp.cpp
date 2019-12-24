@@ -56,14 +56,9 @@ void rl_compress(ifstream *ifile, ofstream *ofile) {
 
     uint8_t curr_byte;
     uint8_t write_byte;
-    uint32_t byte_count;
+    uint16_t byte_count;
 
     curr_byte = ifile->get();
-
-    // test: output file
-    uint32_t byte_number = 0;
-    ofstream out;
-    out.open("out.txt", fstream::binary | fstream::out);
 
     while (!ifile->eof()) {
         byte_count = 0;
@@ -73,18 +68,18 @@ void rl_compress(ifstream *ifile, ofstream *ofile) {
             byte_count++;
             curr_byte = ifile->get();
 
-            // test
-            byte_number++;
-
         }
 
-        // test: print to out.txt
-        out << hex << (int) write_byte << "," << dec << byte_count << "," << byte_number-1 << endl;
+        //create byte array
+        char bytes_to_write[2];
+        bytes_to_write[0] = (byte_count >> 8) & 0xFF;
+        bytes_to_write[1] = (byte_count) & 0xFF;
 
+        //write bytes
         if (byte_count >= 2) {
             ofile->put(write_byte);
             ofile->put(write_byte);
-            ofile->put(byte_count);
+            ofile->write(bytes_to_write, 2);
         } else {
             ofile->put(write_byte);
         }
@@ -108,7 +103,9 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
     uint8_t write_byte;
     uint8_t first_byte;
     uint8_t next_byte;
-    uint32_t byte_count = 0;
+    uint16_t byte_count = 0;
+
+    char bytes_to_read[2];
 
     bool single_byte = false;
 
@@ -118,11 +115,15 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
     write_byte = first_byte;
 
     while (!ifile->eof()) {
-        
-        //cout << hex << first_byte << "," << next_byte << "," << byte_count << endl;
 
         if (first_byte == next_byte) {
-            byte_count = ifile->get();
+            
+            ifile->read(bytes_to_read, 2);
+
+            byte_count = bytes_to_read[0];
+            byte_count = byte_count << 8;
+            byte_count = byte_count | (bytes_to_read[1] & 0x00FF);
+
             first_byte = ifile->get();
             next_byte = ifile->get();
 
@@ -136,10 +137,9 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
             single_byte = true;
         }
 
-        for (uint32_t i = 0; i < byte_count; i++) {
+        for (uint16_t i = 0; i < byte_count; i++) {
             ofile->put(write_byte);
         }
-
 
         write_byte = first_byte;
 
