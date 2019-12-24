@@ -54,11 +54,16 @@ void rl_compress(ifstream *ifile, ofstream *ofile) {
 
     auto start_time = chrono::system_clock::now();
 
-    char curr_byte;
-    char write_byte;
-    char byte_count;
+    uint8_t curr_byte;
+    uint8_t write_byte;
+    uint32_t byte_count;
 
     curr_byte = ifile->get();
+
+    // test: output file
+    uint32_t byte_number = 0;
+    ofstream out;
+    out.open("out.txt", fstream::binary | fstream::out);
 
     while (!ifile->eof()) {
         byte_count = 0;
@@ -67,7 +72,14 @@ void rl_compress(ifstream *ifile, ofstream *ofile) {
         while (curr_byte == write_byte) {
             byte_count++;
             curr_byte = ifile->get();
+
+            // test
+            byte_number++;
+
         }
+
+        // test: print to out.txt
+        out << hex << (int) write_byte << "," << dec << byte_count << "," << byte_number-1 << endl;
 
         if (byte_count >= 2) {
             ofile->put(write_byte);
@@ -93,10 +105,10 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
 
     auto start_time = chrono::system_clock::now();
 
-    char write_byte;
-    char first_byte;
-    char next_byte;
-    char byte_count = 0;
+    uint8_t write_byte;
+    uint8_t first_byte;
+    uint8_t next_byte;
+    uint32_t byte_count = 0;
 
     bool single_byte = false;
 
@@ -107,7 +119,7 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
 
     while (!ifile->eof()) {
         
-        //cout << hex << (int)first_byte << "," << (int)next_byte << "," << (int)byte_count << endl;
+        //cout << hex << first_byte << "," << next_byte << "," << byte_count << endl;
 
         if (first_byte == next_byte) {
             byte_count = ifile->get();
@@ -124,7 +136,7 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
             single_byte = true;
         }
 
-        for (char i = 0; i < byte_count; i++) {
+        for (uint32_t i = 0; i < byte_count; i++) {
             ofile->put(write_byte);
         }
 
@@ -134,7 +146,7 @@ void rl_uncompress(ifstream *ifile, ofstream *ofile) {
     }
 
     if (single_byte) {
-        for (char i = 0; i < byte_count; i++) {
+        for (uint32_t i = 0; i < byte_count; i++) {
             ofile->put(write_byte);
         }
     }
