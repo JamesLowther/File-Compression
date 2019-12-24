@@ -2,6 +2,7 @@
 *.txt
 *.png
 *.jpg
+*.mp3
 
 # vscode
 .vscode
