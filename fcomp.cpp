@@ -1,4 +1,4 @@
-// File compression | James Lowther | December 22, 2019
+// File compression | James Lowther | December 29, 2019
 
 #include <iostream>
 #include <fstream>
@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
 
     if (cli_mode) {
 
-        cout << "File compression | James Lowther | Auguest 2, 2019" << endl << endl;
+        cout << "File compression | James Lowther | December 29, 2019" << endl << endl;
 
         cout << "'c' to compress and 'u' to uncompress" << endl;
 
