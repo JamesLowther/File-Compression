@@ -167,7 +167,7 @@ int main(int argc, char *argv[]) {
 
     // check flags
     if (argc > 1 && argc < 4) {
-        cerr << "You need to specify a input and output file" << endl;
+        cerr << "USAGE: option{c,u} infile outfile" << endl;
         exit(1);
 
     } else if (argc == 1){
